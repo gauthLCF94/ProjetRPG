@@ -43,9 +43,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Characters\Boss\BlackPanther.cs" />
+    <Compile Include="Characters\Boss\CaptainAmerica.cs" />
+    <Compile Include="Characters\Boss\DoctorStrange.cs" />
+    <Compile Include="Characters\Boss\Gamorra.cs" />
+    <Compile Include="Characters\Boss\Hulk.cs" />
+    <Compile Include="Characters\Boss\IronMan.cs" />
+    <Compile Include="Characters\Boss\ScarletWitch.cs" />
+    <Compile Include="Characters\Boss\SpiderMan.cs" />
+    <Compile Include="Characters\Boss\StarLord.cs" />
+    <Compile Include="Characters\Boss\Thor.cs" />
+    <Compile Include="Characters\Boss\Vision.cs" />
+    <Compile Include="Map\Case.cs" />
+    <Compile Include="Characters\Ennemy.cs" />
+    <Compile Include="Characters\Fighter.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Map\Map.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="Characters\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Characters\Warrior.cs" />
+    <Compile Include="Characters\Witch.cs" />
+    <Compile Include="Stones\Attack.cs" />
+    <Compile Include="Stones\Booster.cs" />
+    <Compile Include="Stones\Heal.cs" />
+    <Compile Include="Stones\InfinityStones\InfinityStone.cs" />
+    <Compile Include="Stones\InfinityStones\MindStone.cs" />
+    <Compile Include="Stones\InfinityStones\PowerStone.cs" />
+    <Compile Include="Stones\InfinityStones\RealityStone.cs" />
+    <Compile Include="Stones\InfinityStones\SoulStone.cs" />
+    <Compile Include="Stones\InfinityStones\SpaceStone.cs" />
+    <Compile Include="Stones\InfinityStones\TimeStone.cs" />
+    <Compile Include="Stones\Stone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

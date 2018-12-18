@@ -1,0 +1,7 @@
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\obj\Debug\ProjetRPG.csprojAssemblyReference.cache
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\obj\Debug\ProjetRPG.csproj.CoreCompileInputs.cache
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\bin\Debug\ProjetRPG.exe.config
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\bin\Debug\ProjetRPG.exe
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\bin\Debug\ProjetRPG.pdb
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\obj\Debug\ProjetRPG.exe
+C:\Users\gauth\Cours\B2\Langage Objet (C#)\PROJET\ProjetRPG\ProjetRPG\obj\Debug\ProjetRPG.pdb

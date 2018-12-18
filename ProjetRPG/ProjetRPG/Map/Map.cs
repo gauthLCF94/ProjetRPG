@@ -9,19 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetRPG
+namespace ProjetRPG.Map
 {
-    class Program
+    class Map
     {
-        static void Main(string[] args)
-        {
-            //TODO Main Program
-            Player p = new Player();
-            Warrior w = new Warrior();
+        //TODO Class Map
+        #region Variables
 
-            p.Fight(w);
+        #endregion
 
-            Console.ReadLine();
-        }
+        #region Constructeurs
+
+        #endregion
+
+        #region Methodes
+
+        #endregion
     }
 }

@@ -11,17 +11,22 @@ using System.Threading.Tasks;
 
 namespace ProjetRPG
 {
-    class Program
+    class Game
     {
-        static void Main(string[] args)
+        //TODO Class Game
+        #region Variables
+
+        #endregion
+
+        #region Constructeurs
+
+        #endregion
+
+        #region Methodes
+        public static void GameOver()
         {
-            //TODO Main Program
-            Player p = new Player();
-            Warrior w = new Warrior();
 
-            p.Fight(w);
-
-            Console.ReadLine();
         }
+        #endregion
     }
 }
