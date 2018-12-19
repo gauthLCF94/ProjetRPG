@@ -30,6 +30,7 @@ namespace ProjetRPG.Stones
         {
             cible.stamina += power;
             cible.force += power;
+            cible.stoneInventory["Pierre d'Amélioration"] -= 1;
         }
 
         #endregion

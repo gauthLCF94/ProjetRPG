@@ -16,10 +16,7 @@ namespace ProjetRPG
         static void Main(string[] args)
         {
             //TODO Main Program
-            Player p = new Player();
-            Warrior w = new Warrior();
-
-            p.Fight(w);
+            Game.GameOver();
 
             Console.ReadLine();
         }

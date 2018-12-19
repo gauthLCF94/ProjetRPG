@@ -26,9 +26,10 @@ namespace ProjetRPG.Stones
 
         #region Methodes
 
-        public void Use(Ennemy cible)
+        public void Use(Ennemy cible, Player player)
         {
             cible.lifePoints -= power;
+            player.stoneInventory["Pierre de Dégâts"] -= 1;
         }
 
         #endregion

@@ -34,7 +34,7 @@ namespace ProjetRPG.Characters
         {
             get
             {
-                return MaxLifePoints;
+                return maxLifePoints;
             }
         }
         

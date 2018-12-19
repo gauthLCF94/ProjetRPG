@@ -16,7 +16,10 @@ namespace ProjetRPG.Characters
         #region Variables
 
         public InfinityStone[] infinityStoneInventory = new InfinityStone[6];
-        protected Dictionary <string, int> stoneInventory = new Dictionary<string, int>();
+        public Dictionary <string, int> stoneInventory = new Dictionary<string, int>();
+
+        public bool usedRS;
+        public int usedMS;
 
         #endregion
 
@@ -32,6 +35,8 @@ namespace ProjetRPG.Characters
             stoneInventory.Add("Pierre de Soin", 1);
             stoneInventory.Add("Pierre de Dégâts", 1);
             stoneInventory.Add("Pierre d'Amélioration", 0);
+            usedRS = false;
+            usedMS = 0;
         }
 
         #endregion
@@ -88,10 +93,14 @@ namespace ProjetRPG.Characters
         public void Fight(Ennemy cible)
         {
             int tour = 0;
-
-            bool RSused = false;
+            
             bool endFight = false;
             bool win = false;
+            bool usedSA = false;
+
+            int usingStone = 0;
+            int endRegenSA = 0;
+            int usingSA = 0;
 
             Console.Clear();
             Console.WriteLine(cible.Name + " vous barre le chemin.");
@@ -104,7 +113,6 @@ namespace ProjetRPG.Characters
                 Console.WriteLine(cible.Name + " a " + cible.lifePoints + " points de vie.");
                 Console.WriteLine("Vous avez " + lifePoints + " points de vie.");
                 Console.ReadLine();
-                Console.WriteLine(" ");
                 Console.WriteLine("1 : Attaquer");
                 Console.WriteLine("2 : Utiliser une attaque spéciale");
                 Console.WriteLine("3 : Utiliser une pierre");
@@ -128,21 +136,87 @@ namespace ProjetRPG.Characters
                         }
                         break;
                     case 2:
-                        ShowInfinityStoneInventory();
-                        UseInfinityStone(Menu.AskChoice(1, 6), cible);
-                        if (cible.AreYouDead())
+                        if (!usedSA)
                         {
-                            win = true;
-                            endFight = true;
+                            ShowInfinityStoneInventory();
+                            if (UseInfinityStone(Menu.AskChoice(1, 6), cible))
+                            {
+                                usedSA = true;
+                                endRegenSA = tour + 2;
+                                if (cible.AreYouDead())
+                                {
+                                    win = true;
+                                    endFight = true;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                if (usingSA == 0)
+                                {
+                                    usingSA++;
+                                    goto case 2;
+                                }
+                                else
+                                {
+                                    usingSA = 0;
+                                    Console.WriteLine("Vous avez perdu trop de temps !");
+                                    break;
+                                }
+                            }
                         }
-                        break;
+                        else
+                        {
+                            Console.Write("Vous ne pouvez pas utiliser vos Pierres d'Infinités pour l'instant !");
+                            if (tour == endRegenSA)
+                            {
+                                usedSA = false;
+                            }
+                            goto default;
+                        }
                     case 3:
                         ShowStoneInventory();
-                        UseStone(Menu.AskChoice(1, 3), cible);
-                        if (cible.AreYouDead())
+                        if (!UseStone(Menu.AskChoice(1, 3), cible, this))
                         {
-                            win = true;
-                            endFight = true;
+                            if (usingStone == 0)
+                            {
+                                usingStone++;
+                                goto case 3;
+                            }
+                            else
+                            {
+                                usingStone = 0;
+                                Console.WriteLine("Vous avez perdu trop de temps !");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (cible.AreYouDead())
+                            {
+                                win = true;
+                                endFight = true;
+                            }
+                            break;
+                        }
+                        
+                    default:
+                        Console.WriteLine("1 : Attaquer");
+                        Console.WriteLine("2 : Utiliser une attaque spéciale");
+                        Console.WriteLine("3 : Utiliser une pierre");
+                        c = Menu.AskChoice(1, 3);
+                        if (c == 1)
+                        {
+                            goto case 1;
+                        }
+                        else if (c == 2)
+                        {
+                            Console.Write("Vous ne pouvez pas utiliser vos Pierres d'Infinités pour l'instant ...");
+                            Console.WriteLine("Vous avez perdu trop de temps !");
+                        }
+                        else
+                        {
+                            goto case 3;
                         }
                         break;
                 }
@@ -158,11 +232,8 @@ namespace ProjetRPG.Characters
                         int EnnemyDegat = cible.Attack();
                         Damage(EnnemyDegat);
                         Console.WriteLine("Vous perdez " + EnnemyDegat + " points de vie.");
-                        if (AreYouDead())
-                        {
+                        if (AreYouDead() == true)
                             endFight = true;
-                        }
-                        break;
                     }
                 }
             }
@@ -170,9 +241,22 @@ namespace ProjetRPG.Characters
             if (win)
             {
                 Console.WriteLine("Vous avez vaincu " + cible.Name + ".");
-                if (RSused == true)
+                if (usedRS == true)
                 {
                     lifePoints -= 40;
+                    usedRS = false;
+                    Console.WriteLine("Vous perdez 40 points de vie à cause du contre-coup de la Pierre de Réalité");
+                    if (AreYouDead())
+                    {
+                        Console.WriteLine("Le contre-coup a été trop violent, et vous vous écroulez ... ");
+                        Game.GameOver();
+                    }
+                }
+                if (usedMS != 0)
+                {
+                    stamina = usedMS;
+                    usedMS = 0;
+                    Console.WriteLine("L'effet de la Pierre de l'Esprit s'est dissipé ...");
                 }
             }
             else
@@ -238,39 +322,57 @@ namespace ProjetRPG.Characters
             }
         }
 
-        public void UseStone(int c, Ennemy cible)
+        public bool UseStone(int c, Ennemy cible, Player player)
         {
             switch (c)
             {
                 case 1:
                     if (stoneInventory["Pierre de Soin"] > 0)
                     {
-                        Heal h = new Heal();
-                        h.Use(this);
+                        if (lifePoints == maxLifePoints)
+                        {
+                            Console.WriteLine("Vos points de vie sont déjà au maximum !");
+                            return false;
+                        }
+                        else
+                        {
+                            Heal h = new Heal();
+                            h.Use(this);
+                            return true;
+                        }
+                        
                     }
                     else
+                    {
                         Console.WriteLine("Vous n'avez plus de pierre de soin");
-                    break;
-
+                        return false;
+                    }
                 case 2:
                     if (stoneInventory["Pierre de Dégâts"] > 0)
                     {
                         Attack a = new Attack();
-                        a.Use(cible);
+                        a.Use(cible, player);
+                        return true;
                     }
                     else
+                    {
                         Console.WriteLine("Vous n'avez plus de pierre de dégâts");
-                    break;
-
+                        return false;
+                    }
                 case 3:
                     if (stoneInventory["Pierre d'Amélioration"] > 0)
                     {
                         Booster b = new Booster();
                         b.Use(this);
+                        return true;
                     }
                     else
+                    {
                         Console.WriteLine("Vous n'avez plus de pierre d'amélioration");
-                    break;
+                        return false;
+                    }
+                default:
+                    return false;
             }
         }
 
@@ -290,73 +392,87 @@ namespace ProjetRPG.Characters
             }
         }
 
-        public void UseInfinityStone(int c, Ennemy cible)
+        public bool UseInfinityStone(int c, Ennemy cible)
         {
+            int degat;
+
             switch (c)
             {
                 case 1:
                     if (infinityStoneInventory[c-1] != null)
                     {
                         PowerStone p = new PowerStone();
-                        cible.Damage(PowerStoneSA(p));
+                        degat = PowerStoneSA(p);
+                        cible.Damage(degat);
+                        Console.WriteLine(cible.Name + " perd " + degat + " points de vie");
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
                 case 2:
                     if (infinityStoneInventory[c - 1] != null)
                     {
-                        cible.Damage(SpaceStoneSA());
+                        degat = SpaceStoneSA();
+                        cible.Damage(degat);
+                        Console.WriteLine(cible.Name + " perd " + degat + " points de vie");
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
                 case 3:
                     if (infinityStoneInventory[c - 1] != null)
                     {
                         RealityStone r = new RealityStone();
-                        bool RSused = RealityStoneSA(r);
+                        usedRS = RealityStoneSA(r);
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
                 case 4:
                     if (infinityStoneInventory[c - 1] != null)
                     {
                         TimeStoneSA();
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
                 case 5:
                     if (infinityStoneInventory[c - 1] != null)
                     {
                         SoulStone s = new SoulStone();
                         SoulStoneSA(s);
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
                 case 6:
                     if (infinityStoneInventory[c - 1] != null)
                     {
-                        MindStoneSA();
+                        usedMS = MindStoneSA();
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Vous n'êtes pas en possession de cette pierre ...");
+                        return false;
                     }
-                    break;
+                default:
+                    return false;
             }
         }
 
@@ -375,6 +491,7 @@ namespace ProjetRPG.Characters
                     break;
             }
         }
+         
             #endregion
 
         public override bool AreYouDead()

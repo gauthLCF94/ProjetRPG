@@ -39,7 +39,7 @@ namespace ProjetRPG.Stones
                 cible.lifePoints += power;
                 Console.WriteLine("Vos points de vie ont été réstaurés de " + power + ", vous avez " + cible.lifePoints + " points de vie.");
             }
-
+            cible.stoneInventory["Pierre de Soin"] -= 1;
         }
 
         #endregion

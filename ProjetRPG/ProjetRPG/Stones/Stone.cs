@@ -18,7 +18,7 @@ namespace ProjetRPG.Stones
         protected string description;
         protected int power;
 
-        #region Getter/Setter
+            #region Getter/Setter
 
         public string Name
         {
@@ -30,7 +30,7 @@ namespace ProjetRPG.Stones
             get { return power; }
         }
 
-        #endregion
+            #endregion
 
         #endregion
     }
