@@ -14,6 +14,8 @@ namespace ProjetRPG.Characters
     class Player : Fighter
     {
         #region Variables
+        
+        public int[] position = new int[2];
 
         public InfinityStone[] infinityStoneInventory = new InfinityStone[6];
         public Dictionary <string, int> stoneInventory = new Dictionary<string, int>();
@@ -37,6 +39,8 @@ namespace ProjetRPG.Characters
             stoneInventory.Add("Pierre d'Amélioration", 0);
             usedRS = false;
             usedMS = 0;
+            position[0] = 4;
+            position[1] = 0;
         }
 
         #endregion
@@ -56,6 +60,8 @@ namespace ProjetRPG.Characters
         {
             lifePoints = maxLifePoints;
             Console.WriteLine("Vos points de vie ont été complètement restaurés.");
+            Console.WriteLine("Vous avez " + lifePoints + " points de vie.");
+            Console.ReadLine();
         }
         
         public int SpaceStoneSA()
@@ -83,6 +89,7 @@ namespace ProjetRPG.Characters
         {
             int playerStamina = stamina;
             stamina = stamina * 2;
+            Console.WriteLine("Votre endurance a doublé !");
             return playerStamina;
         }
 
@@ -109,12 +116,12 @@ namespace ProjetRPG.Characters
             while (!endFight)
             {
                 tour++;
-
-                #region Actions du joueur
-
                 Console.WriteLine(cible.Name + " a " + cible.lifePoints + " points de vie.");
                 Console.WriteLine("Vous avez " + lifePoints + " points de vie.");
                 Console.ReadLine();
+
+                #region Actions du joueur
+
                 Console.WriteLine("1 : Attaquer");
                 Console.WriteLine("2 : Utiliser une attaque spéciale");
                 Console.WriteLine("3 : Utiliser une pierre");
@@ -189,6 +196,7 @@ namespace ProjetRPG.Characters
                             {
                                 usingStone = 0;
                                 Console.WriteLine("Vous avez perdu trop de temps !");
+                                Console.ReadLine();
                                 break;
                             }
                         }
@@ -242,6 +250,7 @@ namespace ProjetRPG.Characters
                             endFight = true;
                     }
                 }
+                Console.WriteLine();
 
                 #endregion
             }
@@ -249,6 +258,7 @@ namespace ProjetRPG.Characters
             if (win)
             {
                 Console.WriteLine("Vous avez vaincu " + cible.Name + ".");
+                AddStone(cible.Drop, cible);
                 if (usedRS == true)
                 {
                     lifePoints -= 40;
@@ -266,17 +276,14 @@ namespace ProjetRPG.Characters
                     usedMS = 0;
                     Console.WriteLine("L'effet de la Pierre de l'Esprit s'est dissipé ...");
                 }
-                switch (switch_on)
-                {
-                    default:
-                }
-                Console.WriteLine("Vous fouillez le cadavre " + cible.Name + " ");
             }
             else
             {
                 Console.WriteLine(cible.Name + " vous a tué.");
                 Game.GameOver();
             }
+            Console.ReadLine();
+            Console.Clear();
         }
 
             #endregion
@@ -285,29 +292,65 @@ namespace ProjetRPG.Characters
 
         public void Move()
         {
-            Console.WriteLine("1 : Aller en haut");
-            Console.WriteLine("2 : Aller à droite");
-            Console.WriteLine("3 : Aller en bas");
-            Console.WriteLine("4 : Aller à gauche");
-            Console.WriteLine("5 : Retour");
+            Console.WriteLine("Il est temps de partir !");
+            Console.WriteLine("1 : Aller vers le haut");
+            Console.WriteLine("2 : Aller vers la droite");
+            Console.WriteLine("3 : Aller vers le bas");
+            Console.WriteLine("4 : Aller vers la gauche");
             int c = Menu.AskChoice("Où voulez-vous aller ?", 1, 4);
 
             switch (c)
             {
                 case 1:
-                    //Bouger vers le haut
-                    break;
+                    if (position[0] == 0)
+                    {
+                        Console.WriteLine("Déplacement impossible");
+                        goto default;
+                    }
+                    else
+                    {
+                        position[0] -= 1;
+                        Console.WriteLine("Vous allez vers le haut");
+                        break;
+                    }
                 case 2:
-                    //bouger vers la droite
-                    break;
+                    if (position[1] == 4)
+                    {
+                        Console.WriteLine("Déplacement impossible");
+                        goto default;
+                    }
+                    else
+                    {
+                        position[1] += 1;
+                        Console.WriteLine("Vous allez vers la droite");
+                        break;
+                    }
                 case 3:
-                    //bouger vers le bas
-                    break;
+                    if (position[0] == 4)
+                    {
+                        Console.WriteLine("Déplacement impossible");
+                        goto default;
+                    }
+                    else
+                    {
+                        position[0] += 1;
+                        Console.WriteLine("Vous allez vers le bas");
+                        break;
+                    }
                 case 4:
-                    //bouger vers la gauche
-                    break;
-                case 5:
-                    //retour
+                    if (position[1] == 0)
+                    {
+                        Console.WriteLine("Déplacement impossible");
+                        goto default;
+                    }
+                    else
+                    {
+                        position[1] -= 1;
+                        Console.WriteLine("Vous allez vers la gauche");
+                        break;
+                    }
+                default:
+                    Move();
                     break;
             }
         }
@@ -389,6 +432,60 @@ namespace ProjetRPG.Characters
             }
         }
 
+        public void AddStone(char c, Ennemy cible)
+        {
+            switch (c)
+            {
+                case 'h':
+                    stoneInventory["Pierre de Soin"] += 1;
+                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre de Soin et l'ajoutez à votre inventaire.");
+                    break;
+                case 'a':
+                    stoneInventory["Pierre de Dégâts"] += 1;
+                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre de Dégâts et l'ajoutez à votre inventaire.");
+                    break;
+                case 'b':
+                    stoneInventory["Pierre d'Amélioration"] += 1;
+                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre d'Amélioration et l'ajoutez à votre inventaire.");
+                    break;
+                case 'i':
+                    switch (cible.Name)
+                    {
+                        case "Hulk":
+                            infinityStoneInventory[1] = new SpaceStone();
+                            Console.WriteLine("Vous trouvez la Pierre de l'Espace !");
+                            Console.WriteLine("La Pierre de l'Espace est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            break;
+                        case "StarLord":
+                            infinityStoneInventory[2] = new RealityStone();
+                            Console.WriteLine("Vous trouvez la Pierre de Réalité !");
+                            Console.WriteLine("La Pierre de Réalité est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            break;
+                        case "Docteur Strange":
+                            infinityStoneInventory[3] = new TimeStone();
+                            Console.WriteLine("Vous trouvez la Pierre du Temps !");
+                            Console.WriteLine("La Pierre du Temps est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            break;
+                        case "Gamorra":
+                            infinityStoneInventory[4] = new SoulStone();
+                            Console.WriteLine("Vous trouvez la Pierre de l'Âme !");
+                            Console.WriteLine("La Pierre de l'Âme est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            break;
+                        case "Vision":
+                            infinityStoneInventory[5] = new MindStone();
+                            Console.WriteLine("Vous trouvez la Pierre de l'Esprit !");
+                            Console.WriteLine("La Pierre de l'Esprit est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            break;
+                        default:
+                            goto default;
+                    }
+                    break;
+                default:
+                    Game.EndGame();
+                    break;
+            }
+        }
+
         public void ShowInfinityStoneInventory()
         {
             Console.WriteLine("POCHE A PIERRES D'INFINITEES");
@@ -443,6 +540,7 @@ namespace ProjetRPG.Characters
                     {
                         RealityStone r = new RealityStone();
                         usedRS = RealityStoneSA(r);
+                        Console.WriteLine("Vos points de vie ont été augmenté de " + r.StoneLifePoints + " points.");
                         return true;
                     }
                     else
@@ -465,7 +563,10 @@ namespace ProjetRPG.Characters
                     if (infinityStoneInventory[c - 1] != null)
                     {
                         SoulStone s = new SoulStone();
-                        SoulStoneSA(s);
+                        degat = SoulStoneSA(s);
+                        cible.Damage(degat * 4);
+                        Damage(degat);
+                        Console.WriteLine("Vous sacrifiez " + degat + " de vos points de vie, et infligez " + degat * 4 + " points de dégâts à " + cible.Name + ".");
                         return true;
                     }
                     else
@@ -495,12 +596,15 @@ namespace ProjetRPG.Characters
             {
                 case "Pierre de Soin":
                     stoneInventory[x.Name] += 1;
+                    Console.WriteLine("Vous trouvez une Pierre de Soin et l'ajoutez à votre inventaire.");
                     break;
                 case "Pierre de Dégâts":
                     stoneInventory[x.Name] += 1;
+                    Console.WriteLine("Vous trouvez une Pierre de Dégâts et l'ajoutez à votre inventaire.");
                     break;
                 case "Pierre d'Amélioration":
                     stoneInventory[x.Name] += 1;
+                    Console.WriteLine("Vous trouvez une Pierre d'Amélioration et l'ajoutez à votre inventaire.");
                     break;
             }
         }

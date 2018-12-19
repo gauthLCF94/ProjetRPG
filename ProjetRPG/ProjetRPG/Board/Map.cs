@@ -17,7 +17,7 @@ namespace ProjetRPG.Board
         //TODO Class Map
         #region Variables
 
-        public Case[,] map;
+        public Case[,] box;
 
         #endregion
 
@@ -25,32 +25,32 @@ namespace ProjetRPG.Board
 
         public Map()
         {
-            map = new Case[5, 5];
-            map[0, 0] = new Case(new Gamorra());
-            map[0, 1] = new Case(new Warrior());
-            map[0, 2] = new Case(new Heal());
-            map[0, 3] = new Case(new CaptainAmerica());
-            map[0, 4] = new Case(new Vision());
-            map[1, 0] = new Case(new StarLord());
-            map[1, 1] = new Case(new Booster());
-            map[1, 2] = new Case(new Witch());
-            map[1, 3] = new Case(new ScarletWitch());
-            map[1, 4] = new Case(new Attack());
-            map[2, 0] = new Case(new Witch());
-            map[2, 1] = new Case(new Heal());
-            map[2, 2] = new Case(new Witch());
-            map[2, 3] = new Case(new Booster());
-            map[2, 4] = new Case(new Witch());
-            map[3, 0] = new Case(new Warrior());
-            map[3, 1] = new Case(new Attack());
-            map[3, 2] = new Case(new Warrior());
-            map[3, 3] = new Case(new Heal());
-            map[3, 4] = new Case(new SpiderMan());
-            map[4, 0] = new Case(new Hulk());
-            map[4, 1] = new Case(new Booster());
-            map[4, 2] = new Case(new Warrior());
-            map[4, 3] = new Case(new IronMan());
-            map[4, 4] = new Case(new DoctorStrange());
+            box = new Case[5, 5];
+            box[0, 0] = new Case(new Gamorra());
+            box[0, 1] = new Case(new Warrior());
+            box[0, 2] = new Case(new Heal());
+            box[0, 3] = new Case(new CaptainAmerica());
+            box[0, 4] = new Case(new Vision());
+            box[1, 0] = new Case(new StarLord());
+            box[1, 1] = new Case(new Booster());
+            box[1, 2] = new Case(new Witch());
+            box[1, 3] = new Case(new ScarletWitch());
+            box[1, 4] = new Case(new Attack());
+            box[2, 0] = new Case(new Witch());
+            box[2, 1] = new Case(new Heal());
+            box[2, 2] = new Case(new Witch());
+            box[2, 3] = new Case(new Booster());
+            box[2, 4] = new Case(new Witch());
+            box[3, 0] = new Case(new Warrior());
+            box[3, 1] = new Case(new Attack());
+            box[3, 2] = new Case(new Warrior());
+            box[3, 3] = new Case(new Heal());
+            box[3, 4] = new Case(new SpiderMan());
+            box[4, 0] = new Case(new Hulk());
+            box[4, 1] = new Case(new Booster());
+            box[4, 2] = new Case(new Warrior());
+            box[4, 3] = new Case(new IronMan());
+            box[4, 4] = new Case(new DoctorStrange());
         }
 
         #endregion
@@ -65,7 +65,7 @@ namespace ProjetRPG.Board
                 {
                     try
                     {
-                        map[x, y].Display();
+                        box[x, y].Display();
                     }
                     catch (NullReferenceException)
                     {

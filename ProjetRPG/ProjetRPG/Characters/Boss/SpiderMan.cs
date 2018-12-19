@@ -16,6 +16,7 @@ namespace ProjetRPG.Characters.Boss
             maxLifePoints = lifePoints;
             force = 4;
             stamina = 7;
+            drop = DropType();
         }
     }
 }

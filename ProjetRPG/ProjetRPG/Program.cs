@@ -16,11 +16,41 @@ namespace ProjetRPG
     {
         static void Main(string[] args)
         {
-            //TODO Main Program
-            Map map = new Map();
-            map.ShowMap();
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.SetWindowPosition(Console.WindowLeft, Console.WindowTop);
 
-            Console.ReadLine();
+            Player player;
+            Map map;
+
+            bool end = false;
+            
+            while (!end)
+            {
+                Menu.ShowMenu();
+
+                switch (Menu.AskChoice("Que voulez-vous faire ?", 1, 4))
+                {
+                    case 1:
+                        player = new Player();
+                        map = new Map();
+
+                        Game.MainGame(player, map);
+
+                        break;
+                    case 2:
+                        Menu.LoadGame();
+                        break; //TODO LoadGame goto default;
+                    case 3:
+                        Menu.About();
+                        Console.Clear();
+                        break;
+                    case 4:
+                        end = true;
+                        break;
+                }
+            }
+            
+            //Console.ReadLine();
         }
     }
 }

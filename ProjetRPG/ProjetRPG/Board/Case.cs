@@ -54,7 +54,6 @@ namespace ProjetRPG.Board
             {
                 if (ennemy == null)
                 {
-
                     Console.Write("[P]");
                 }
                 else
@@ -63,12 +62,6 @@ namespace ProjetRPG.Board
                     {
                         case Ennemy.EnnemyType.Boss:
                             Console.Write("[B]");
-                            break;
-                        case Ennemy.EnnemyType.Witch:
-                            Console.Write("[S]");
-                            break;
-                        case Ennemy.EnnemyType.Warrior:
-                            Console.Write("[G]");
                             break;
                         default:
                             Console.Write("[E]");

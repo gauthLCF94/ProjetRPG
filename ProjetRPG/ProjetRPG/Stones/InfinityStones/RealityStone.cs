@@ -35,7 +35,7 @@ namespace ProjetRPG.Stones.InfinityStones
 
         public int StoneLifePoints
         {
-            get { return StoneLifePoints; }
+            get { return stoneLifePoints * 4; }
         }
 
         #endregion

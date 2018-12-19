@@ -18,6 +18,7 @@ namespace ProjetRPG.Characters.Boss
             stamina = 9;
             mana = 5;
             spirit = 9;
+            drop = 'i';
         }
 
         public override int Spell()

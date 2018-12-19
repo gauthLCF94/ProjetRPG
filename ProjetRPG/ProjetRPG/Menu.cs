@@ -15,7 +15,7 @@ namespace ProjetRPG
     {
         #region Methodes
 
-        public void ShowMenu()
+        public static void ShowMenu()
         {
             Console.WriteLine("MENU");
             Console.WriteLine("1 : Start Game");
@@ -24,12 +24,12 @@ namespace ProjetRPG
             Console.WriteLine("4 : Exit");
         }
 
-        public static int AskChoice(string q, int min, int max)
+        public static int AskChoice(string question, int min, int max)
         {
             int c = -1;
 
             Console.WriteLine();
-            Console.WriteLine(q);
+            Console.WriteLine(question);
             try
             {
                 c = int.Parse(Console.ReadLine());
@@ -55,19 +55,27 @@ namespace ProjetRPG
             return c;
         }
 
-        public void StartGame()
+        public static void LoadGame()
         {
-            //TODO MENU Lancer une nouvelle partie
+            //TODO LoadGame Menu
+            Console.WriteLine("Fonction indisponible pour le moment");
+            Console.ReadLine();
         }
 
-        public void LoadGame()
+        public static void About()
         {
-            //TODO MENU Charger une partie
+            Console.Clear();
+            Console.WriteLine("Dans ce jeu, vous incarnez Thanos le Titan Fou !");
+            Console.WriteLine("Votre but ? Sauver l'univers !");
+            Console.WriteLine("La surpopulation de l'univers va le mener à sa perte !");
+            Console.WriteLine("Votre monde a déjà succombé et vous ne laisserez pas d'autres mondes subir le même sort !");
+            Console.WriteLine("Vous devez rassemblez les 6 Pierres d'Infinitées et unir leurs pouvoir pour supprimer la moitié des êtres vivants de l'univers pour le salut de l'autre moitié.");
+            Console.WriteLine("Mais des soit-disant \"Héros\" se dressent contre vous !");
+            Console.ReadLine();
         }
 
-        public void Exit()
+        public static void Exit()
         {
-            //TODO MENU Quitter le jeu
         }
         #endregion
 
