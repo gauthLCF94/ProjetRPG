@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,14 +24,32 @@ namespace ProjetRPG
             Console.WriteLine("4 : Exit");
         }
 
-        public static int AskChoice(int min, int max)
+        public static int AskChoice(string q, int min, int max)
         {
-            int c = int.Parse(Console.ReadLine());
+            int c = -1;
+
+            Console.WriteLine();
+            Console.WriteLine(q);
+            try
+            {
+                c = int.Parse(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Entrez un chiffre entre " + min + " et " + max);
+            }
+            
 
             while ((c > max) || (c < min))
             {
-                Console.WriteLine("Que voulez-vous faire ?");
-                c = int.Parse(Console.ReadLine());
+                try
+                {
+                    c = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Entrez un chiffre entre " + min + " et " + max);
+                }
             }
 
             return c;

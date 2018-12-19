@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public Vision()
         {
             name = "Vision";
+            type = EnnemyType.Boss;
             lifePoints = 12;
             maxLifePoints = lifePoints;
             force = 2;

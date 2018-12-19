@@ -2,7 +2,8 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Characters.Boss;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace ProjetRPG
         static void Main(string[] args)
         {
             //TODO Main Program
-            Game.GameOver();
+            Map map = new Map();
+            map.ShowMap();
 
             Console.ReadLine();
         }

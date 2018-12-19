@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;

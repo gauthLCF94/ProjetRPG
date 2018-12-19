@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public ScarletWitch()
         {
             name = "Scarlet Witch";
+            type = EnnemyType.Boss;
             lifePoints = 18;
             maxLifePoints = lifePoints;
             force = 0;

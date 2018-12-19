@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public DoctorStrange()
         {
             name = "Docteur Strange";
+            type = EnnemyType.Boss;
             lifePoints = 15;
             maxLifePoints = lifePoints;
             force = 1;

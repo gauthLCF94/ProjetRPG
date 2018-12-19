@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,8 @@ namespace ProjetRPG
 
         public Warrior()
         {
-            name = "Guerrier téméraire";
+            name = "Guerrier";
+            type = EnnemyType.Warrior;
             lifePoints = 20;
             maxLifePoints = lifePoints;
             force = 3;

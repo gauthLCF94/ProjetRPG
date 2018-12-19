@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public BlackPanther()
         {
             name = "Black Panther";
+            type = EnnemyType.Boss;
             lifePoints = 30;
             maxLifePoints = lifePoints;
             force = 6;

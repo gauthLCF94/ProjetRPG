@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public CaptainAmerica()
         {
             name = "Captain America";
+            type = EnnemyType.Boss;
             lifePoints = 30;
             maxLifePoints = lifePoints;
             force = 7;

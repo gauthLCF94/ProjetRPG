@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,13 +110,15 @@ namespace ProjetRPG.Characters
             {
                 tour++;
 
+                #region Actions du joueur
+
                 Console.WriteLine(cible.Name + " a " + cible.lifePoints + " points de vie.");
                 Console.WriteLine("Vous avez " + lifePoints + " points de vie.");
                 Console.ReadLine();
                 Console.WriteLine("1 : Attaquer");
                 Console.WriteLine("2 : Utiliser une attaque spéciale");
                 Console.WriteLine("3 : Utiliser une pierre");
-                int c = Menu.AskChoice(1, 3);
+                int c = Menu.AskChoice("Que faire ?", 1, 3);
 
                 switch (c)
                 {
@@ -139,7 +141,7 @@ namespace ProjetRPG.Characters
                         if (!usedSA)
                         {
                             ShowInfinityStoneInventory();
-                            if (UseInfinityStone(Menu.AskChoice(1, 6), cible))
+                            if (UseInfinityStone(Menu.AskChoice("Quelle Pierre d'Infinité voulez-vous utilisez ?", 1, 6), cible))
                             {
                                 usedSA = true;
                                 endRegenSA = tour + 2;
@@ -176,7 +178,7 @@ namespace ProjetRPG.Characters
                         }
                     case 3:
                         ShowStoneInventory();
-                        if (!UseStone(Menu.AskChoice(1, 3), cible, this))
+                        if (!UseStone(Menu.AskChoice("Quelle pierre voulez-vous utilisez ?", 1, 3), cible, this))
                         {
                             if (usingStone == 0)
                             {
@@ -204,7 +206,7 @@ namespace ProjetRPG.Characters
                         Console.WriteLine("1 : Attaquer");
                         Console.WriteLine("2 : Utiliser une attaque spéciale");
                         Console.WriteLine("3 : Utiliser une pierre");
-                        c = Menu.AskChoice(1, 3);
+                        c = Menu.AskChoice("Que faire ?", 1, 3);
                         if (c == 1)
                         {
                             goto case 1;
@@ -221,10 +223,14 @@ namespace ProjetRPG.Characters
                         break;
                 }
 
+                #endregion
+
+                #region Action du PNJ Ennemy
+
                 if (endFight == false)
                 {
                     Console.ReadLine();
-                    Console.WriteLine(cible.Name + " va attaquer !");
+                    Console.WriteLine(cible.Name + " attaque !");
                     if (Protect())
                         Console.WriteLine("Vous vous protégez et ne subissez pas de dégâts.");
                     else
@@ -236,6 +242,8 @@ namespace ProjetRPG.Characters
                             endFight = true;
                     }
                 }
+
+                #endregion
             }
 
             if (win)
@@ -258,6 +266,11 @@ namespace ProjetRPG.Characters
                     usedMS = 0;
                     Console.WriteLine("L'effet de la Pierre de l'Esprit s'est dissipé ...");
                 }
+                switch (switch_on)
+                {
+                    default:
+                }
+                Console.WriteLine("Vous fouillez le cadavre " + cible.Name + " ");
             }
             else
             {
@@ -277,7 +290,7 @@ namespace ProjetRPG.Characters
             Console.WriteLine("3 : Aller en bas");
             Console.WriteLine("4 : Aller à gauche");
             Console.WriteLine("5 : Retour");
-            int c = Menu.AskChoice(1, 4);
+            int c = Menu.AskChoice("Où voulez-vous aller ?", 1, 4);
 
             switch (c)
             {

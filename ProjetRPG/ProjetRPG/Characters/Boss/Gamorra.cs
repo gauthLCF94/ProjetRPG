@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public Gamorra()
         {
             name = "Gamorra";
+            type = EnnemyType.Boss;
             lifePoints = 25;
             maxLifePoints = lifePoints;
             force = 7;

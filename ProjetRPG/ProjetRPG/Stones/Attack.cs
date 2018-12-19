@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +30,7 @@ namespace ProjetRPG.Stones
         {
             cible.lifePoints -= power;
             player.stoneInventory["Pierre de Dégâts"] -= 1;
+            Console.WriteLine(cible.Name + " perd " + power + " points de vie !");
         }
 
         #endregion

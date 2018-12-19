@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public Hulk()
         {
             name = "Hulk";
+            type = EnnemyType.Boss;
             lifePoints = 20;
             maxLifePoints = lifePoints;
             force = 5;

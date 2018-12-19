@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public IronMan()
         {
             name = "Iron Man";
+            type = EnnemyType.Boss;
             lifePoints = 25;
             maxLifePoints = lifePoints;
             force = 5;

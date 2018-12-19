@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public StarLord()
         {
             name = "StarLord";
+            type = EnnemyType.Boss;
             lifePoints = 20;
             maxLifePoints = lifePoints;
             force = 5;

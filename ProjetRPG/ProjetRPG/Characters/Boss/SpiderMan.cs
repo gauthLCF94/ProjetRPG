@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public SpiderMan()
         {
             name = "SpiderMan";
+            type = EnnemyType.Boss;
             lifePoints = 22;
             maxLifePoints = lifePoints;
             force = 4;

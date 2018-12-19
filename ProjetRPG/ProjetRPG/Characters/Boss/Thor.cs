@@ -11,6 +11,7 @@ namespace ProjetRPG.Characters.Boss
         public Thor()
         {
             name = "Thor";
+            type = EnnemyType.Boss;
             lifePoints = 50;
             maxLifePoints = lifePoints;
             force = 10;

@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,8 @@ namespace ProjetRPG
 
         public Witch()
         {
-            name = "Sorcière pathétique";
+            name = "Sorcière";
+            type = EnnemyType.Witch;
             lifePoints = 10;
             maxLifePoints = lifePoints;
             force = 1;

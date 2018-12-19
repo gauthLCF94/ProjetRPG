@@ -2,7 +2,7 @@
 using ProjetRPG.Stones;
 using ProjetRPG.Stones.InfinityStones;
 using ProjetRPG.Characters;
-using ProjetRPG.Map;
+using ProjetRPG.Board;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,26 @@ namespace ProjetRPG
 {
     abstract class Ennemy : Fighter
     {
+        public enum EnnemyType { Boss, Witch, Warrior };
+
         #region Variables
 
         protected char drop;
+        protected EnnemyType type;
+
+        #region Getter/Setter
+
+        public char Drop
+        {
+            get { return drop; }
+        }
+
+        public EnnemyType Type
+        {
+            get { return type; }
+        }
+
+            #endregion
 
         #endregion
 
@@ -40,37 +57,6 @@ namespace ProjetRPG
                     return 'b'; // b -> booster
                 default:
                     return 'h';
-            }
-        }
-
-        public virtual Stone WhatYouDrop(Ennemy E)
-        {
-            switch (E.drop)
-            {
-                case 'h':
-                    return new Heal();
-                case 'a':
-                    return new Attack();
-                case 'b':
-                    return new Booster();
-                case 'i':
-                    switch (E.name)
-                    {
-                        case "Hulk":
-                            return new SpaceStone();
-                        case "Vision":
-                            return new MindStone();
-                        case "Docteur Strange":
-                            return new TimeStone();
-                        case "Gamorra":
-                            return new SoulStone();
-                        case "StarLord":
-                            return new RealityStone();
-                        default:
-                            return new SpaceStone();
-                    }
-                default:
-                    return new Heal();
             }
         }
 
