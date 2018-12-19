@@ -20,6 +20,7 @@ namespace ProjetRPG.Stones
             name = "Pierre de Dégâts";
             power = 15;
             description = "Un pierre de pouvoir qui inflige " + power + " points de dégâts à l'adversaire.";
+            type = StoneType.Attack;
         }
 
         #endregion
@@ -30,7 +31,8 @@ namespace ProjetRPG.Stones
         {
             cible.lifePoints -= power;
             player.stoneInventory["Pierre de Dégâts"] -= 1;
-            Console.WriteLine(cible.Name + " perd " + power + " points de vie !");
+            Console.WriteLine("Vous lancez la pierre de toutes vos forces sur " + cible.Name + " !");
+            Console.WriteLine("La pierre explose et inflige " + power + " points de dégâts !");
         }
 
         #endregion

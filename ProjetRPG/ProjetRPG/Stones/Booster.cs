@@ -20,6 +20,7 @@ namespace ProjetRPG.Stones
             name = "Pierre d'Amélioration";
             power = 1;
             description = "Une pierre de pouvoir qui améliore vos statistiques de force et d'endurance de " + power + ".";
+            type = StoneType.Booster;
         }
 
         #endregion
@@ -31,6 +32,8 @@ namespace ProjetRPG.Stones
             cible.stamina += power;
             cible.force += power;
             cible.stoneInventory["Pierre d'Amélioration"] -= 1;
+            Console.WriteLine("Votre force a augmenté de " + power + " point !");
+            Console.WriteLine("Votre endurance a augmenté de " + power + " point !");
         }
 
         #endregion

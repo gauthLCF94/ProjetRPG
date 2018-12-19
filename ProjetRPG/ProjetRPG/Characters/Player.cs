@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjetRPG.Characters.Boss;
+using System.Threading;
 
 namespace ProjetRPG.Characters
 {
@@ -34,6 +36,7 @@ namespace ProjetRPG.Characters
             force = 7;
             stamina = 6;
             infinityStoneInventory[0] = new PowerStone();
+            new PowerStone().Upgrade(this);
             stoneInventory.Add("Pierre de Soin", 1);
             stoneInventory.Add("Pierre de Dégâts", 1);
             stoneInventory.Add("Pierre d'Amélioration", 0);
@@ -97,7 +100,7 @@ namespace ProjetRPG.Characters
 
             #region Combat
 
-        public void Fight(Ennemy cible)
+        public bool Fight(Ennemy cible)
         {
             int tour = 0;
             
@@ -110,7 +113,7 @@ namespace ProjetRPG.Characters
             int usingSA = 0;
 
             Console.Clear();
-            Console.WriteLine(cible.Name + " vous barre le chemin.");
+            Console.WriteLine("Vous allez vous battre contre " + cible.Name);
             Console.ReadLine();
 
             while (!endFight)
@@ -148,29 +151,37 @@ namespace ProjetRPG.Characters
                         if (!usedSA)
                         {
                             ShowInfinityStoneInventory();
-                            if (UseInfinityStone(Menu.AskChoice("Quelle Pierre d'Infinité voulez-vous utilisez ?", 1, 6), cible))
+                            int c2 = Menu.AskChoice("Quelle Pierre d'Infinité voulez-vous utilisez ?", 1, 7);
+                            if (c2 == 7)
                             {
-                                usedSA = true;
-                                endRegenSA = tour + 2;
-                                if (cible.AreYouDead())
-                                {
-                                    win = true;
-                                    endFight = true;
-                                }
-                                break;
+                                continue;
                             }
                             else
                             {
-                                if (usingSA == 0)
+                                if (UseInfinityStone(c2, cible))
                                 {
-                                    usingSA++;
-                                    goto case 2;
+                                    usedSA = true;
+                                    endRegenSA = tour + 2;
+                                    if (cible.AreYouDead())
+                                    {
+                                        win = true;
+                                        endFight = true;
+                                    }
+                                    break;
                                 }
                                 else
                                 {
-                                    usingSA = 0;
-                                    Console.WriteLine("Vous avez perdu trop de temps !");
-                                    break;
+                                    if (usingSA == 0)
+                                    {
+                                        usingSA++;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        usingSA = 0;
+                                        Console.WriteLine("Vous avez perdu trop de temps !");
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -185,30 +196,39 @@ namespace ProjetRPG.Characters
                         }
                     case 3:
                         ShowStoneInventory();
-                        if (!UseStone(Menu.AskChoice("Quelle pierre voulez-vous utilisez ?", 1, 3), cible, this))
+                        int c3 = Menu.AskChoice("Quelle pierre voulez-vous utilisez ?", 1, 3);
+                        if (c3 == 3)
                         {
-                            if (usingStone == 0)
-                            {
-                                usingStone++;
-                                goto case 3;
-                            }
-                            else
-                            {
-                                usingStone = 0;
-                                Console.WriteLine("Vous avez perdu trop de temps !");
-                                Console.ReadLine();
-                                break;
-                            }
+                            continue;
                         }
                         else
                         {
-                            if (cible.AreYouDead())
+                            if (!UseStone(c3, cible, this))
                             {
-                                win = true;
-                                endFight = true;
+                                if (usingStone == 0)
+                                {
+                                    usingStone++;
+                                    break;
+                                }
+                                else
+                                {
+                                    usingStone = 0;
+                                    Console.WriteLine("Vous avez perdu trop de temps !");
+                                    Console.ReadLine();
+                                    break;
+                                }
                             }
-                            break;
+                            else
+                            {
+                                if (cible.AreYouDead())
+                                {
+                                    win = true;
+                                    endFight = true;
+                                }
+                                break;
+                            }
                         }
+                        
                         
                     default:
                         Console.WriteLine("1 : Attaquer");
@@ -258,7 +278,7 @@ namespace ProjetRPG.Characters
             if (win)
             {
                 Console.WriteLine("Vous avez vaincu " + cible.Name + ".");
-                AddStone(cible.Drop, cible);
+                AddStone(cible.Drop, cible, this);
                 if (usedRS == true)
                 {
                     lifePoints -= 40;
@@ -268,6 +288,7 @@ namespace ProjetRPG.Characters
                     {
                         Console.WriteLine("Le contre-coup a été trop violent, et vous vous écroulez ... ");
                         Game.GameOver();
+                        return false;
                     }
                 }
                 if (usedMS != 0)
@@ -276,14 +297,26 @@ namespace ProjetRPG.Characters
                     usedMS = 0;
                     Console.WriteLine("L'effet de la Pierre de l'Esprit s'est dissipé ...");
                 }
+                return true;
             }
             else
             {
                 Console.WriteLine(cible.Name + " vous a tué.");
                 Game.GameOver();
+                return false;
             }
+        }
+
+        public void Fight(Ennemy vision, Thor thor)
+        {
+            Fight(vision);
             Console.ReadLine();
             Console.Clear();
+            Fight(thor);
+            Console.ReadLine();
+            Console.Clear();
+            
+            Game.EndGame();
         }
 
             #endregion
@@ -293,12 +326,13 @@ namespace ProjetRPG.Characters
         public void Move()
         {
             Console.WriteLine("Il est temps de partir !");
+            Console.WriteLine();
             Console.WriteLine("1 : Aller vers le haut");
             Console.WriteLine("2 : Aller vers la droite");
             Console.WriteLine("3 : Aller vers le bas");
             Console.WriteLine("4 : Aller vers la gauche");
             int c = Menu.AskChoice("Où voulez-vous aller ?", 1, 4);
-
+            Console.WriteLine();
             switch (c)
             {
                 case 1:
@@ -306,6 +340,21 @@ namespace ProjetRPG.Characters
                     {
                         Console.WriteLine("Déplacement impossible");
                         goto default;
+                    }
+                    else if (position[0] - 1 == 0 && position[1] == 4)
+                    {
+                        int count = 0;
+                        for (int i = 0; i < infinityStoneInventory.Length; i++)
+                        {
+                            if (infinityStoneInventory[i] != null)
+                                count++;
+                        }
+                        if (count > 5)
+                        {
+                            Console.WriteLine("Il vaudrait mieux récupérer d'autres Pierres d'Infinitées avant d'aller par là !..");
+                            goto default;
+                        }
+                        break;
                     }
                     else
                     {
@@ -318,6 +367,21 @@ namespace ProjetRPG.Characters
                     {
                         Console.WriteLine("Déplacement impossible");
                         goto default;
+                    }
+                    else if (position[0] - 1 == 0 && position[1] == 4)
+                    {
+                        int count = 0;
+                        for (int i = 0; i < infinityStoneInventory.Length; i++)
+                        {
+                            if (infinityStoneInventory[i] != null)
+                                count++;
+                        }
+                        if (count > 5)
+                        {
+                            Console.WriteLine("Il vaudrait mieux récupérer d'autres Pierres d'Infinitées avant d'aller par là !..");
+                            goto default;
+                        }
+                        break;
                     }
                     else
                     {
@@ -350,6 +414,8 @@ namespace ProjetRPG.Characters
                         break;
                     }
                 default:
+                    Console.ReadLine();
+                    Console.Clear();
                     Move();
                     break;
             }
@@ -364,18 +430,33 @@ namespace ProjetRPG.Characters
             Console.WriteLine("INVENTAIRE");
             Console.WriteLine("1 : Poche à pierres");
             Console.WriteLine("2 : Poche à Pierres d'Infinitées");
+            Console.WriteLine("3 : Retour");
         }
 
         public void ShowStoneInventory()
         {
             int count = 1;
 
-            Console.WriteLine("POCHE A PIERRE");
+            Console.WriteLine("POCHE A PIERRE\n");
             foreach (KeyValuePair<string, int> stone in stoneInventory)
             {
                 Console.WriteLine(count + " : " + stone.Key + " (" + stone.Value + ")");
+                if (count == 1)
+                {
+                    Console.Write("\t" + new Heal().Description + "\n\n");
+                }
+                else if (count == 2)
+                {
+                    Console.Write("\t" + new Attack().Description + "\n\n");
+                }
+                else
+                {
+                    Console.Write("\t" + new Booster().Description + "\n\n");
+                }
+                
                 count++;
             }
+            Console.WriteLine("4 : Retour");
         }
 
         public bool UseStone(int c, Ennemy cible, Player player)
@@ -432,7 +513,7 @@ namespace ProjetRPG.Characters
             }
         }
 
-        public void AddStone(char c, Ennemy cible)
+        public void AddStone(char c, Ennemy cible, Player player)
         {
             switch (c)
             {
@@ -455,26 +536,31 @@ namespace ProjetRPG.Characters
                             infinityStoneInventory[1] = new SpaceStone();
                             Console.WriteLine("Vous trouvez la Pierre de l'Espace !");
                             Console.WriteLine("La Pierre de l'Espace est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            Console.WriteLine(new SpaceStone().Upgrade(player));
                             break;
                         case "StarLord":
                             infinityStoneInventory[2] = new RealityStone();
                             Console.WriteLine("Vous trouvez la Pierre de Réalité !");
                             Console.WriteLine("La Pierre de Réalité est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            Console.WriteLine(new RealityStone().Upgrade(player));
                             break;
                         case "Docteur Strange":
                             infinityStoneInventory[3] = new TimeStone();
                             Console.WriteLine("Vous trouvez la Pierre du Temps !");
                             Console.WriteLine("La Pierre du Temps est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            Console.WriteLine(new TimeStone().Upgrade(player));
                             break;
                         case "Gamorra":
                             infinityStoneInventory[4] = new SoulStone();
                             Console.WriteLine("Vous trouvez la Pierre de l'Âme !");
                             Console.WriteLine("La Pierre de l'Âme est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            Console.WriteLine(new SoulStone().Upgrade(player));
                             break;
                         case "Vision":
                             infinityStoneInventory[5] = new MindStone();
                             Console.WriteLine("Vous trouvez la Pierre de l'Esprit !");
                             Console.WriteLine("La Pierre de l'Esprit est ajouté à votre inventaire et une nouvelle capacité spéciale est disponible.");
+                            Console.WriteLine(new MindStone().Upgrade(player));
                             break;
                         default:
                             goto default;
@@ -489,17 +575,41 @@ namespace ProjetRPG.Characters
         public void ShowInfinityStoneInventory()
         {
             Console.WriteLine("POCHE A PIERRES D'INFINITEES");
+            Console.WriteLine();
             for (int i = 0; i < infinityStoneInventory.Length; i++)
             {
                 try
                 {
                     Console.WriteLine(i + 1 + " : " + infinityStoneInventory[i].Name);
+                    switch (i)
+                    {
+                        case 0:
+                            Console.WriteLine(new PowerStone().Description);
+                            break;
+                        case 1:
+                            Console.WriteLine(new SpaceStone().Description);
+                            break;
+                        case 2:
+                            Console.WriteLine(new RealityStone().Description);
+                            break;
+                        case 3:
+                            Console.WriteLine(new TimeStone().Description);
+                            break;
+                        case 4:
+                            Console.WriteLine(new SoulStone().Description);
+                            break;
+                        case 5:
+                            Console.WriteLine(new MindStone().Description);
+                            break;
+                    }
+                    Console.WriteLine();
                 }
                 catch (NullReferenceException)
                 {
                     Console.WriteLine(i + 1 + " : Vide");
                 }
             }
+            Console.WriteLine("7 : Retour");
         }
 
         public bool UseInfinityStone(int c, Ennemy cible)
@@ -617,6 +727,20 @@ namespace ProjetRPG.Characters
                 return false;
             else
                 return true;
+        }
+
+        public void ShowStats()
+        {
+            Console.Clear();
+            Console.WriteLine(Name);
+            Console.WriteLine("Points de vie : " + lifePoints + "/" + maxLifePoints);
+            Console.WriteLine();
+            Console.WriteLine("Force : " + force);
+            Console.WriteLine("Endurance : " + stamina);
+            Console.WriteLine();
+            Console.WriteLine("Attaque : " + (force + (stamina / 3)) + " (Force + (Stamina/3))");
+            Console.WriteLine("Chances de bloquer : " + stamina + "%");
+            Console.ReadLine();
         }
 
         #endregion

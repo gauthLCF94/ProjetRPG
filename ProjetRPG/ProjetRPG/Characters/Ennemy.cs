@@ -20,7 +20,7 @@ namespace ProjetRPG
         protected char drop;
         protected EnnemyType type;
 
-        #region Getter/Setter
+            #region Getter/Setter
 
         public char Drop
         {
@@ -47,17 +47,16 @@ namespace ProjetRPG
         {
             Random r = new Random(DateTime.Now.Millisecond);
 
-            switch (r.Next() % 3)
+            if (r.Next() % 100 < 50)
             {
-                case 0:
-                    return 'h'; // h -> heal
-                case 1:
-                    return 'a'; // a -> attack
-                case 2:
-                    return 'b'; // b -> booster
-                default:
+                r = new Random(DateTime.Now.Millisecond);
+                if (r.Next() % 100 < 50)
+                    return 'a';
+                else
                     return 'h';
             }
+            else
+                return 'b';
         }
 
         #endregion

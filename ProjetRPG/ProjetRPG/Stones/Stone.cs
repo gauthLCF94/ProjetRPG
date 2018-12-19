@@ -13,10 +13,12 @@ namespace ProjetRPG.Stones
     abstract class Stone
     {
         #region Variables
+        public enum StoneType {Booster, Heal, Attack, Infinity};
 
         protected string name;
         protected string description;
         protected int power;
+        protected StoneType type;
 
             #region Getter/Setter
 
@@ -29,8 +31,27 @@ namespace ProjetRPG.Stones
         {
             get { return power; }
         }
+        
+        public StoneType Type
+        {
+            get { return type; }
+        }
 
-            #endregion
+        public string Description
+        {
+            get { return description; }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Methodes
+
+        public string Desc()
+        {
+            return Description;
+        }
 
         #endregion
     }

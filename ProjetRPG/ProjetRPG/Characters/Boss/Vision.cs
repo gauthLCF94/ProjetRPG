@@ -19,6 +19,6 @@ namespace ProjetRPG.Characters.Boss
             mana = 20;
             spirit = 7;
             drop = 'i';
-        }
+        } 
     }
 }

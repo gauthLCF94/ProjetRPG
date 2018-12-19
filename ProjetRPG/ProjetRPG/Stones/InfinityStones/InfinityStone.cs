@@ -28,26 +28,25 @@ namespace ProjetRPG.Stones
         }
 
             #endregion
-       
+
         #endregion
 
         #region Methodes
 
-        public void Upgrade(Player cible)
+        public string Upgrade(Player cible)
         {
-            cible.lifePoints += stoneLifePoints;
+            cible.maxLifePoints += stoneLifePoints;
             cible.force += stoneForcePoints;
             cible.stamina += stoneStaminaPoints;
-        }
 
-        public virtual int SpecialAttack(Player player)
-        {
-            return 0;
+            string s = "Votre maximum de points de vie a augmenté de " + stoneLifePoints
+                + " points, votre force a augmenté de " + stoneForcePoints
+                + " points, et votre endurance a augmenté de " + stoneStaminaPoints
+                + " points.";
+
+            return s;
         }
 
         #endregion
-
-
-
     }
 }

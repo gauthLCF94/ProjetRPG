@@ -20,6 +20,7 @@ namespace ProjetRPG.Stones
             name = "Pierre de Soin";
             power = 7;
             description = "Une pierre de pouvoir qui rend " + power + " points de vie.";
+            type = StoneType.Heal;
         }
 
         #endregion
@@ -29,15 +30,15 @@ namespace ProjetRPG.Stones
         public void Use(Player cible)
         {
             Console.WriteLine("Vous utilisez " + name);
-            if (cible.lifePoints + power > cible.MaxLifePoints)
+            if (cible.lifePoints + power > cible.maxLifePoints)
             {
-                cible.lifePoints = cible.MaxLifePoints;
-                Console.WriteLine("Vos points de vie ont été restaurés au maximum, vous avez " + cible.MaxLifePoints + " points de vie.");
+                cible.lifePoints = cible.maxLifePoints;
+                Console.WriteLine("Vos points de vie ont été restaurés au maximum, vous avez " + cible.maxLifePoints + " points de vie.");
             }
             else
             { 
                 cible.lifePoints += power;
-                Console.WriteLine("Vos points de vie ont été réstaurés de " + power + ", vous avez " + cible.lifePoints + " points de vie.");
+                Console.WriteLine("Vos points de vie ont été réstaurés de " + power + "points , vous avez " + cible.lifePoints + " points de vie.");
             }
             cible.stoneInventory["Pierre de Soin"] -= 1;
         }

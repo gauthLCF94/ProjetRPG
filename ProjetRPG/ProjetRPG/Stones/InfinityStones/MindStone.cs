@@ -24,9 +24,10 @@ namespace ProjetRPG.Stones.InfinityStones
             stoneLifePoints = 2;
             stoneForcePoints = 2;
             stoneStaminaPoints = 2;
-            description = "Un des six Pierres d'Infinité. Améliore votre santé maximal de " + stoneLifePoints +
+            description = "Un des six Pierres d'Infinité.\nAméliore votre santé maximal de " + stoneLifePoints +
                 " points, votre force de " + stoneForcePoints + " points, et votre endurance de " + stoneStaminaPoints + " points." +
-                " Attaque spéciale : double votre endurance jusqu'à la fin du combat.";
+                "\nAttaque spéciale : double votre endurance jusqu'à la fin du combat.";
+            type = StoneType.Infinity;
         }
 
         #endregion

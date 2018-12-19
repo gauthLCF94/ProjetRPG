@@ -17,7 +17,7 @@ namespace ProjetRPG.Characters
 
         protected string name;
         public int lifePoints;
-        protected int maxLifePoints;
+        public int maxLifePoints;
         public int force;
         public int stamina;
 
@@ -29,16 +29,7 @@ namespace ProjetRPG.Characters
         {
             get { return name; }
         }
-
-        public int MaxLifePoints
-        {
-            get
-            {
-                return maxLifePoints;
-            }
-        }
         
-
         #endregion
 
         #region Methodes
@@ -66,7 +57,7 @@ namespace ProjetRPG.Characters
         {
             if (lifePoints <= 0)
             {
-                Console.WriteLine(Name + " est mort ...");
+                Console.WriteLine(Name + " est K.O ...");
                 return true;
             }
             else

@@ -69,14 +69,12 @@ namespace ProjetRPG
             Console.WriteLine("Votre but ? Sauver l'univers !");
             Console.WriteLine("La surpopulation de l'univers va le mener à sa perte !");
             Console.WriteLine("Votre monde a déjà succombé et vous ne laisserez pas d'autres mondes subir le même sort !");
-            Console.WriteLine("Vous devez rassemblez les 6 Pierres d'Infinitées et unir leurs pouvoir pour supprimer la moitié des êtres vivants de l'univers pour le salut de l'autre moitié.");
+            Console.WriteLine("Vous devez rassemblez les 6 Pierres d'Infinitées et unir leurs pouvoir");
+            Console.WriteLine("pour supprimer la moitié des êtres vivants de l'univers pour le salut de l'autre moitié.");
             Console.WriteLine("Mais des soit-disant \"Héros\" se dressent contre vous !");
             Console.ReadLine();
         }
 
-        public static void Exit()
-        {
-        }
         #endregion
 
     }
