@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9301119-7189-4138-940B-763757CCC8B2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ProjetRPG</RootNamespace>
+    <AssemblyName>ProjetRPG</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Characters\Boss\BlackPanther.cs" />
+    <Compile Include="Characters\Boss\CaptainAmerica.cs" />
+    <Compile Include="Characters\Boss\DoctorStrange.cs" />
+    <Compile Include="Characters\Boss\Gamorra.cs" />
+    <Compile Include="Characters\Boss\Hulk.cs" />
+    <Compile Include="Characters\Boss\IronMan.cs" />
+    <Compile Include="Characters\Boss\ScarletWitch.cs" />
+    <Compile Include="Characters\Boss\SpiderMan.cs" />
+    <Compile Include="Characters\Boss\StarLord.cs" />
+    <Compile Include="Characters\Boss\Thor.cs" />
+    <Compile Include="Characters\Boss\Vision.cs" />
+    <Compile Include="Board\Case.cs" />
+    <Compile Include="Characters\Ennemy.cs" />
+    <Compile Include="Characters\Fighter.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Board\Map.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Characters\Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Characters\Warrior.cs" />
+    <Compile Include="Characters\Witch.cs" />
+    <Compile Include="Stones\Attack.cs" />
+    <Compile Include="Stones\Booster.cs" />
+    <Compile Include="Stones\Heal.cs" />
+    <Compile Include="Stones\InfinityStones\InfinityStone.cs" />
+    <Compile Include="Stones\InfinityStones\MindStone.cs" />
+    <Compile Include="Stones\InfinityStones\PowerStone.cs" />
+    <Compile Include="Stones\InfinityStones\RealityStone.cs" />
+    <Compile Include="Stones\InfinityStones\SoulStone.cs" />
+    <Compile Include="Stones\InfinityStones\SpaceStone.cs" />
+    <Compile Include="Stones\InfinityStones\TimeStone.cs" />
+    <Compile Include="Stones\Stone.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
