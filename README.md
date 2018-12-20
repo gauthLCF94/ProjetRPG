@@ -1,2 +1,2 @@
-# ProjetRPG
-Projet mini-jeu. Evaluation C#.
+# SnapTheWorld
+Jeu vidéo. Projet C# / Langage Objet.
