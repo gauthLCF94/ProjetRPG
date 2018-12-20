@@ -13,7 +13,6 @@ namespace ProjetRPG.Board
 {
     class Case
     {
-        //TODO Class Case
         #region Variables
 
         public Ennemy ennemy;
@@ -69,6 +68,15 @@ namespace ProjetRPG.Board
                     }
                 }
             }
+        }
+
+        public void DisplayPlayer()
+        {
+            Console.Write('[');
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write('P');
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(']');
         }
 
         #endregion

@@ -22,10 +22,11 @@ namespace ProjetRPG
             Player player;
             Map map;
 
-            bool end = false;
+            bool endMain = false;
             
-            while (!end)
+            while (!endMain)
             {
+                Game.Title();
                 Menu.ShowMenu();
 
                 switch (Menu.AskChoice("Que voulez-vous faire ?", 1, 4))
@@ -34,7 +35,8 @@ namespace ProjetRPG
                         player = new Player();
                         map = new Map();
 
-                        Menu.About();
+                        Game.Title();
+                        Game.Speech();
                         
                         Console.WriteLine("Vous commencez votre périple avec déjà en votre possession la Pierre du Pouvoir");
                         Console.ReadLine();
@@ -42,32 +44,35 @@ namespace ProjetRPG
                         Console.WriteLine("Votre aventure commence ...");
                         Thread.Sleep(1000);
                         Console.WriteLine(@"
-  __  __          _____ _   _ _______ ______ _   _          _   _ _______   _ 
- |  \/  |   /\   |_   _| \ | |__   __|  ____| \ | |   /\   | \ | |__   __| | |
- | \  / |  /  \    | | |  \| |  | |  | |__  |  \| |  /  \  |  \| |  | |    | |
- | |\/| | / /\ \   | | | . ` |  | |  |  __| | . ` | / /\ \ | . ` |  | |    | |
- | |  | |/ ____ \ _| |_| |\  |  | |  | |____| |\  |/ ____ \| |\  |  | |    |_|
- |_|  |_/_/    \_\_____|_| \_|  |_|  |______|_| \_/_/    \_\_| \_|  |_|    (_)
+                              __  __          _____ _   _ _______ ______ _   _          _   _ _______   _ 
+                             |  \/  |   /\   |_   _| \ | |__   __|  ____| \ | |   /\   | \ | |__   __| | |
+                             | \  / |  /  \    | | |  \| |  | |  | |__  |  \| |  /  \  |  \| |  | |    | |
+                             | |\/| | / /\ \   | | | . ` |  | |  |  __| | . ` | / /\ \ | . ` |  | |    | |
+                             | |  | |/ ____ \ _| |_| |\  |  | |  | |____| |\  |/ ____ \| |\  |  | |    |_|
+                             |_|  |_/_/    \_\_____|_| \_|  |_|  |______|_| \_/_/    \_\_| \_|  |_|    (_)
                         ");
                         Console.ReadLine();
 
                         Game.MainGame(player, map);
+                        
+                        if (Game.winGame)
+                            Game.EndGame();
+                        else
+                            Game.GameOver();
 
                         break;
                     case 2:
                         Menu.LoadGame();
-                        break; //TODO LoadGame goto default;
+                        break;
                     case 3:
                         Menu.About();
                         Console.Clear();
                         break;
                     case 4:
-                        end = true;
+                        endMain = true;
                         break;
                 }
             }
-            
-            //Console.ReadLine();
         }
     }
 }

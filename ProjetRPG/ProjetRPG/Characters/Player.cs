@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjetRPG.Characters.Boss;
 using System.Threading;
+using System.IO;
 
 namespace ProjetRPG.Characters
 {
@@ -167,20 +168,17 @@ namespace ProjetRPG.Characters
                                         win = true;
                                         endFight = true;
                                     }
-                                    break;
                                 }
                                 else
                                 {
                                     if (usingSA == 0)
                                     {
                                         usingSA++;
-                                        break;
                                     }
                                     else
                                     {
                                         usingSA = 0;
                                         Console.WriteLine("Vous avez perdu trop de temps !");
-                                        break;
                                     }
                                 }
                             }
@@ -194,6 +192,7 @@ namespace ProjetRPG.Characters
                             }
                             goto default;
                         }
+                        break;
                     case 3:
                         ShowStoneInventory();
                         int c3 = Menu.AskChoice("Quelle pierre voulez-vous utilisez ?", 1, 3);
@@ -208,14 +207,12 @@ namespace ProjetRPG.Characters
                                 if (usingStone == 0)
                                 {
                                     usingStone++;
-                                    break;
                                 }
                                 else
                                 {
                                     usingStone = 0;
                                     Console.WriteLine("Vous avez perdu trop de temps !");
                                     Console.ReadLine();
-                                    break;
                                 }
                             }
                             else
@@ -225,11 +222,9 @@ namespace ProjetRPG.Characters
                                     win = true;
                                     endFight = true;
                                 }
-                                break;
                             }
                         }
-                        
-                        
+                        break;
                     default:
                         Console.WriteLine("1 : Attaquer");
                         Console.WriteLine("2 : Utiliser une attaque spéciale");
@@ -287,7 +282,6 @@ namespace ProjetRPG.Characters
                     if (AreYouDead())
                     {
                         Console.WriteLine("Le contre-coup a été trop violent, et vous vous écroulez ... ");
-                        Game.GameOver();
                         return false;
                     }
                 }
@@ -297,28 +291,14 @@ namespace ProjetRPG.Characters
                     usedMS = 0;
                     Console.WriteLine("L'effet de la Pierre de l'Esprit s'est dissipé ...");
                 }
-                return true;
             }
             else
             {
                 Console.WriteLine(cible.Name + " vous a tué.");
-                Game.GameOver();
                 return false;
             }
+            return true;
         }
-
-        public void Fight(Ennemy vision, Thor thor)
-        {
-            Fight(vision);
-            Console.ReadLine();
-            Console.Clear();
-            Fight(thor);
-            Console.ReadLine();
-            Console.Clear();
-            
-            Game.EndGame();
-        }
-
             #endregion
 
             #region Deplacement
@@ -566,9 +546,6 @@ namespace ProjetRPG.Characters
                             goto default;
                     }
                     break;
-                default:
-                    Game.EndGame();
-                    break;
             }
         }
 
@@ -741,6 +718,44 @@ namespace ProjetRPG.Characters
             Console.WriteLine("Attaque : " + (force + (stamina / 3)) + " (Force + (Stamina/3))");
             Console.WriteLine("Chances de bloquer : " + stamina + "%");
             Console.ReadLine();
+        }
+
+        public void Save(Map map)
+        {
+            Console.Clear();
+            Console.WriteLine("Donner un nom à cette sauvegarde : ");
+            string save = Console.ReadLine();
+
+            string savePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            string LP = lifePoints.ToString();
+            string MLP = maxLifePoints.ToString();
+            string F = force.ToString();
+            string S = stamina.ToString();
+            string Px = position[0].ToString();
+            string Py = position[1].ToString();
+            
+            string[] data = {LP, MLP, F, S, Px, Py};
+
+            Directory.CreateDirectory(savePath + @"\STW");
+
+            using (StreamWriter saveFile = new StreamWriter(savePath + @"\STW\" + save + ".txt", true))
+            {
+                foreach (string d in data)
+                    saveFile.WriteLine(d);
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 5; y++)
+                    {
+                        if (map.box[x, y].visited)
+                        {
+                            saveFile.WriteLine(x + "," + y);
+                        }
+
+                    }
+                }
+            }
+
         }
 
         #endregion

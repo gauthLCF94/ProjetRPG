@@ -14,7 +14,6 @@ namespace ProjetRPG.Board
 {
     class Map
     {
-        //TODO Class Map
         #region Variables
 
         public Case[,] box;
@@ -53,11 +52,18 @@ namespace ProjetRPG.Board
             box[4, 4] = new Case(new DoctorStrange());
         }
 
+        public Map(int x)
+        {
+            x = 1;
+            box = new Case[x , x];
+            box[0, 0] = new Case(new Thor());
+        }
+
         #endregion
 
         #region Methodes
 
-        public void ShowMap()
+        public void ShowMap(Player player)
         {
             for (int x = 0; x < 5; x++)
             {
@@ -65,7 +71,10 @@ namespace ProjetRPG.Board
                 {
                     try
                     {
-                        box[x, y].Display();
+                        if (player.position[0] == x && player.position[1] == y)
+                            box[x, y].DisplayPlayer();
+                        else
+                            box[x, y].Display();
                     }
                     catch (NullReferenceException)
                     {
@@ -77,6 +86,21 @@ namespace ProjetRPG.Board
                     }
                 }
             }
+            Console.WriteLine();
+            Console.Write("[");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("P");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("] : Votre position actuelle");
+            Console.WriteLine();
+            Console.WriteLine("[B] : Boss");
+            Console.WriteLine("[E] : Ennemy");
+            Console.WriteLine("[P] : Pierre (Une pierre de pouvoir moins puissante qu'une pierre d'Infinitée mais peut être utile en combat)");
+            Console.Write("[");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("x");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("] : Emplacement déjà visité");
         }
 
         #endregion
