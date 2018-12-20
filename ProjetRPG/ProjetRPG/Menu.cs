@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ProjetRPG
 {
@@ -57,8 +58,69 @@ namespace ProjetRPG
 
         public static void LoadGame()
         {
-            //TODO LoadGame Menu
-            Console.WriteLine("Fonction indisponible pour le moment");
+            Console.Clear();
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\STW";
+            DirectoryInfo savedGame = new DirectoryInfo(path);
+            FileInfo[] files = savedGame.GetFiles();
+
+            Console.WriteLine("Sauvegarde(s) disponible(s) : ");
+
+            int counter = 0;
+            foreach (FileInfo f in files)
+            {
+                counter++;
+                Console.WriteLine(counter + " : " + f.Name);
+            }
+
+            int c = AskChoice("Quelle sauvegarde faut-il charger ?", 1, counter);
+
+            string fileToLoad = files[counter - 1].Name;
+            int[] statPlayer = new int[13];
+            List<int[]> posVisited = new List<int[]>();
+
+            using (StreamReader sr = new StreamReader(path + @"\" + fileToLoad))
+            {
+                int count = 0;
+                string l;
+                while ((l = sr.ReadLine()) != null)
+                {
+                    try
+                    {
+                        statPlayer[count] = int.Parse(l);
+                    }
+                    catch(FormatException)
+                    {
+                        string[] s = l.Split(',');
+                        int[] p = new int[2];
+                        for (int i = 0; i < s.Length; i++)
+                        {
+                            p[i] = int.Parse(s[i]);
+                        }
+                        posVisited.Add(p);
+                    }
+                    finally
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            Player player = new Player(statPlayer);
+            Map map = new Map(posVisited);
+
+            Console.Clear();
+            Console.WriteLine("Sauvegarde chargée avec succés !");
+            Console.ReadLine();
+            Console.Clear();
+
+            Game.MainGame(player, map);
+
+            if (Game.winGame)
+                Game.EndGame();
+            else
+                Game.GameOver();
+
             Console.ReadLine();
         }
 

@@ -59,6 +59,41 @@ namespace ProjetRPG.Board
             box[0, 0] = new Case(new Thor());
         }
 
+        public Map(List<int[]> list)
+        {
+            box = new Case[5, 5];
+            box[0, 0] = new Case(new Gamorra());
+            box[0, 1] = new Case(new Warrior());
+            box[0, 2] = new Case(new Heal());
+            box[0, 3] = new Case(new CaptainAmerica());
+            box[0, 4] = new Case(new Vision());
+            box[1, 0] = new Case(new StarLord());
+            box[1, 1] = new Case(new Booster());
+            box[1, 2] = new Case(new Witch());
+            box[1, 3] = new Case(new ScarletWitch());
+            box[1, 4] = new Case(new Attack());
+            box[2, 0] = new Case(new Witch());
+            box[2, 1] = new Case(new Heal());
+            box[2, 2] = new Case(new Witch());
+            box[2, 3] = new Case(new Booster());
+            box[2, 4] = new Case(new Witch());
+            box[3, 0] = new Case(new Warrior());
+            box[3, 1] = new Case(new Attack());
+            box[3, 2] = new Case(new Warrior());
+            box[3, 3] = new Case(new Heal());
+            box[3, 4] = new Case(new SpiderMan());
+            box[4, 0] = new Case(new Hulk());
+            box[4, 1] = new Case(new Booster());
+            box[4, 2] = new Case(new Warrior());
+            box[4, 3] = new Case(new IronMan());
+            box[4, 4] = new Case(new DoctorStrange());
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                box[list[i][0], list[i][1]].visited = true; 
+            }
+        }
+
         #endregion
 
         #region Methodes
@@ -95,7 +130,7 @@ namespace ProjetRPG.Board
             Console.WriteLine();
             Console.WriteLine("[B] : Boss");
             Console.WriteLine("[E] : Ennemy");
-            Console.WriteLine("[P] : Pierre (Une pierre de pouvoir moins puissante qu'une pierre d'Infinitée mais peut être utile en combat)");
+            Console.WriteLine("[G] : Gemme (Une gemme de pouvoir moins puissante qu'une Pierre d'Infinitée mais peut être utile en combat)");
             Console.Write("[");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("x");

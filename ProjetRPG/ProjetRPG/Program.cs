@@ -5,6 +5,7 @@ using ProjetRPG.Characters;
 using ProjetRPG.Characters.Boss;
 using ProjetRPG.Board;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,10 +60,17 @@ namespace ProjetRPG
                             Game.EndGame();
                         else
                             Game.GameOver();
-
                         break;
                     case 2:
-                        Menu.LoadGame();
+                        try
+                        {
+                            Menu.LoadGame();
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Aucune sauvegarde n'a été trouvé ...");
+                        }
+                        Console.ReadLine();
                         break;
                     case 3:
                         Menu.About();

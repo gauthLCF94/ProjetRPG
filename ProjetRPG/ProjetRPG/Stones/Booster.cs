@@ -17,9 +17,9 @@ namespace ProjetRPG.Stones
 
         public Booster()
         {
-            name = "Pierre d'Amélioration";
+            name = "Gemme d'Amélioration";
             power = 1;
-            description = "Une pierre de pouvoir qui améliore vos statistiques de force et d'endurance de " + power + ".";
+            description = "Une gemme de pouvoir qui améliore vos statistiques de force et d'endurance de " + power + ".";
             type = StoneType.Booster;
         }
 
@@ -31,7 +31,7 @@ namespace ProjetRPG.Stones
         {
             cible.stamina += power;
             cible.force += power;
-            cible.stoneInventory["Pierre d'Amélioration"] -= 1;
+            cible.stoneInventory["Gemme d'Amélioration"] -= 1;
             Console.WriteLine("Votre force a augmenté de " + power + " point !");
             Console.WriteLine("Votre endurance a augmenté de " + power + " point !");
         }

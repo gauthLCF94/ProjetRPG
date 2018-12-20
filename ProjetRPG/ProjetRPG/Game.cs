@@ -109,32 +109,32 @@ namespace ProjetRPG
                                     {
                                         case 1:
                                             player.ShowStoneInventory();
-                                            int c2 = Menu.AskChoice("Quelle pierre voulez-vous utiliser ?", 1, 4);
+                                            int c2 = Menu.AskChoice("Quelle gemme voulez-vous utiliser ?", 1, 4);
                                             switch (c2)
                                             {
                                                 case 1:
-                                                    if (player.stoneInventory["Pierre de Soin"] > 0)
+                                                    if (player.stoneInventory["Gemme de Soin"] > 0)
                                                     {
                                                         Heal h = new Heal();
                                                         h.Use(player);
                                                     }
                                                     else
                                                     {
-                                                        Console.WriteLine("Vous n'avez plus de pierre de soin ...");
+                                                        Console.WriteLine("Vous n'avez plus de gemme de soin ...");
                                                     }
                                                     break;
                                                 case 2:
                                                     Console.WriteLine("Ce n'est pas le moment d'utiliser ça !");
                                                     break;
                                                 case 3:
-                                                    if (player.stoneInventory["Pierre d'Amélioration"] > 0)
+                                                    if (player.stoneInventory["Gemme d'Amélioration"] > 0)
                                                     {
                                                         Booster b = new Booster();
                                                         b.Use(player);
                                                     }
                                                     else
                                                     {
-                                                        Console.WriteLine("Vous n'avez plus de pierre d'amélioration ...");
+                                                        Console.WriteLine("Vous n'avez plus de gemme d'amélioration ...");
                                                     }
                                                     break;
                                                 case 4:
@@ -144,7 +144,7 @@ namespace ProjetRPG
                                             break;
                                         case 2:
                                             player.ShowInfinityStoneInventory();
-                                            int c3 = Menu.AskChoice("Quelle Pierre d'Infinitées voulez-vous utiliser ?", 1, 7);
+                                            int c3 = Menu.AskChoice("Quelle Pierre d'Infinitée voulez-vous utiliser ?", 1, 7);
                                             switch (c3)
                                             {
                                                 case 4:

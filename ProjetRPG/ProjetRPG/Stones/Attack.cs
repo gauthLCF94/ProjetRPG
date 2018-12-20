@@ -17,9 +17,9 @@ namespace ProjetRPG.Stones
 
         public Attack()
         {
-            name = "Pierre de Dégâts";
+            name = "Gemme de Dégâts";
             power = 15;
-            description = "Un pierre de pouvoir qui inflige " + power + " points de dégâts à l'adversaire.";
+            description = "Un gemme de pouvoir qui inflige " + power + " points de dégâts à l'adversaire.";
             type = StoneType.Attack;
         }
 
@@ -30,9 +30,9 @@ namespace ProjetRPG.Stones
         public void Use(Ennemy cible, Player player)
         {
             cible.lifePoints -= power;
-            player.stoneInventory["Pierre de Dégâts"] -= 1;
-            Console.WriteLine("Vous lancez la pierre de toutes vos forces sur " + cible.Name + " !");
-            Console.WriteLine("La pierre explose et inflige " + power + " points de dégâts !");
+            player.stoneInventory["Gemme de Dégâts"] -= 1;
+            Console.WriteLine("Vous lancez la gemme de toutes vos forces sur " + cible.Name + " !");
+            Console.WriteLine("La gemme explose et inflige " + power + " points de dégâts !");
         }
 
         #endregion

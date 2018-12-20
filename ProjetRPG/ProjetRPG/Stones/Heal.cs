@@ -17,9 +17,9 @@ namespace ProjetRPG.Stones
 
         public Heal()
         {
-            name = "Pierre de Soin";
+            name = "Gemme de Soin";
             power = 7;
-            description = "Une pierre de pouvoir qui rend " + power + " points de vie.";
+            description = "Une gemme de pouvoir qui rend " + power + " points de vie.";
             type = StoneType.Heal;
         }
 
@@ -38,9 +38,9 @@ namespace ProjetRPG.Stones
             else
             { 
                 cible.lifePoints += power;
-                Console.WriteLine("Vos points de vie ont été réstaurés de " + power + "points , vous avez " + cible.lifePoints + " points de vie.");
+                Console.WriteLine("Vos points de vie ont été réstaurés de " + power + " points , vous avez " + cible.lifePoints + " points de vie.");
             }
-            cible.stoneInventory["Pierre de Soin"] -= 1;
+            cible.stoneInventory["Gemme de Soin"] -= 1;
         }
 
         #endregion

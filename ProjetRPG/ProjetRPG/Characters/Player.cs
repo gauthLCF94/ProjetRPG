@@ -38,13 +38,46 @@ namespace ProjetRPG.Characters
             stamina = 6;
             infinityStoneInventory[0] = new PowerStone();
             new PowerStone().Upgrade(this);
-            stoneInventory.Add("Pierre de Soin", 1);
-            stoneInventory.Add("Pierre de Dégâts", 1);
-            stoneInventory.Add("Pierre d'Amélioration", 0);
+            stoneInventory.Add("Gemme de Soin", 1);
+            stoneInventory.Add("Gemme de Dégâts", 1);
+            stoneInventory.Add("Gemme d'Amélioration", 0);
             usedRS = false;
             usedMS = 0;
             position[0] = 4;
             position[1] = 0;
+        }
+
+        public Player(int[] tab)
+        {
+            name = "Thanos";
+            lifePoints = tab[0];
+            maxLifePoints = tab[1];
+            force = tab[2];
+            stamina = tab[3];
+            infinityStoneInventory[0] = new PowerStone();
+            if (tab[4] == 1)
+            {
+                infinityStoneInventory[1] = new SpaceStone();
+            }
+            if (tab[5] == 1)
+            {
+                infinityStoneInventory[2] = new RealityStone();
+            }
+            if (tab[6] == 1)
+            {
+                infinityStoneInventory[3] = new TimeStone();
+            }
+            if (tab[7] == 1)
+            {
+                infinityStoneInventory[4] = new SoulStone();
+            }
+            stoneInventory.Add("Gemme de Soin", tab[8]);
+            stoneInventory.Add("Gemme de Dégâts", tab[9]);
+            stoneInventory.Add("Gemme d'Amélioration", tab[10]);
+            usedRS = false;
+            usedMS = 0;
+            position[0] = tab[11];
+            position[1] = tab[12];
         }
 
         #endregion
@@ -128,7 +161,7 @@ namespace ProjetRPG.Characters
 
                 Console.WriteLine("1 : Attaquer");
                 Console.WriteLine("2 : Utiliser une attaque spéciale");
-                Console.WriteLine("3 : Utiliser une pierre");
+                Console.WriteLine("3 : Utiliser une gemme");
                 int c = Menu.AskChoice("Que faire ?", 1, 3);
 
                 switch (c)
@@ -195,7 +228,7 @@ namespace ProjetRPG.Characters
                         break;
                     case 3:
                         ShowStoneInventory();
-                        int c3 = Menu.AskChoice("Quelle pierre voulez-vous utilisez ?", 1, 3);
+                        int c3 = Menu.AskChoice("Quelle gemme voulez-vous utilisez ?", 1, 3);
                         if (c3 == 3)
                         {
                             continue;
@@ -228,7 +261,7 @@ namespace ProjetRPG.Characters
                     default:
                         Console.WriteLine("1 : Attaquer");
                         Console.WriteLine("2 : Utiliser une attaque spéciale");
-                        Console.WriteLine("3 : Utiliser une pierre");
+                        Console.WriteLine("3 : Utiliser une gemme");
                         c = Menu.AskChoice("Que faire ?", 1, 3);
                         if (c == 1)
                         {
@@ -408,7 +441,7 @@ namespace ProjetRPG.Characters
         public void ShowInventory()
         {
             Console.WriteLine("INVENTAIRE");
-            Console.WriteLine("1 : Poche à pierres");
+            Console.WriteLine("1 : Poche à gemmes");
             Console.WriteLine("2 : Poche à Pierres d'Infinitées");
             Console.WriteLine("3 : Retour");
         }
@@ -417,7 +450,7 @@ namespace ProjetRPG.Characters
         {
             int count = 1;
 
-            Console.WriteLine("POCHE A PIERRE\n");
+            Console.WriteLine("POCHE A GEMMES\n");
             foreach (KeyValuePair<string, int> stone in stoneInventory)
             {
                 Console.WriteLine(count + " : " + stone.Key + " (" + stone.Value + ")");
@@ -444,7 +477,7 @@ namespace ProjetRPG.Characters
             switch (c)
             {
                 case 1:
-                    if (stoneInventory["Pierre de Soin"] > 0)
+                    if (stoneInventory["Gemme de Soin"] > 0)
                     {
                         if (lifePoints == maxLifePoints)
                         {
@@ -461,11 +494,11 @@ namespace ProjetRPG.Characters
                     }
                     else
                     {
-                        Console.WriteLine("Vous n'avez plus de pierre de soin");
+                        Console.WriteLine("Vous n'avez plus de gemme de soin");
                         return false;
                     }
                 case 2:
-                    if (stoneInventory["Pierre de Dégâts"] > 0)
+                    if (stoneInventory["Gemme de Dégâts"] > 0)
                     {
                         Attack a = new Attack();
                         a.Use(cible, player);
@@ -473,11 +506,11 @@ namespace ProjetRPG.Characters
                     }
                     else
                     {
-                        Console.WriteLine("Vous n'avez plus de pierre de dégâts");
+                        Console.WriteLine("Vous n'avez plus de gemme de dégâts");
                         return false;
                     }
                 case 3:
-                    if (stoneInventory["Pierre d'Amélioration"] > 0)
+                    if (stoneInventory["Gemme d'Amélioration"] > 0)
                     {
                         Booster b = new Booster();
                         b.Use(this);
@@ -485,7 +518,7 @@ namespace ProjetRPG.Characters
                     }
                     else
                     {
-                        Console.WriteLine("Vous n'avez plus de pierre d'amélioration");
+                        Console.WriteLine("Vous n'avez plus de gemme d'amélioration");
                         return false;
                     }
                 default:
@@ -498,16 +531,16 @@ namespace ProjetRPG.Characters
             switch (c)
             {
                 case 'h':
-                    stoneInventory["Pierre de Soin"] += 1;
-                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre de Soin et l'ajoutez à votre inventaire.");
+                    stoneInventory["Gemme de Soin"] += 1;
+                    Console.WriteLine("En fouillant votre adversaire, vous trouvez une Gemme de Soin et l'ajoutez à votre inventaire.");
                     break;
                 case 'a':
-                    stoneInventory["Pierre de Dégâts"] += 1;
-                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre de Dégâts et l'ajoutez à votre inventaire.");
+                    stoneInventory["Gemme de Dégâts"] += 1;
+                    Console.WriteLine("En fouillant votre adversaire, vous trouvez une Gemme de Dégâts et l'ajoutez à votre inventaire.");
                     break;
                 case 'b':
-                    stoneInventory["Pierre d'Amélioration"] += 1;
-                    Console.WriteLine("En fouillant le cadavre, vous trouvez une Pierre d'Amélioration et l'ajoutez à votre inventaire.");
+                    stoneInventory["Gemme d'Amélioration"] += 1;
+                    Console.WriteLine("En fouillant votre adversaire, vous trouvez une Gemme d'Amélioration et l'ajoutez à votre inventaire.");
                     break;
                 case 'i':
                     switch (cible.Name)
@@ -681,17 +714,17 @@ namespace ProjetRPG.Characters
         {
             switch (x.Name)
             {
-                case "Pierre de Soin":
+                case "Gemme de Soin":
                     stoneInventory[x.Name] += 1;
-                    Console.WriteLine("Vous trouvez une Pierre de Soin et l'ajoutez à votre inventaire.");
+                    Console.WriteLine("Vous trouvez une Gemme de Soin et l'ajoutez à votre inventaire.");
                     break;
-                case "Pierre de Dégâts":
+                case "Gemme de Dégâts":
                     stoneInventory[x.Name] += 1;
-                    Console.WriteLine("Vous trouvez une Pierre de Dégâts et l'ajoutez à votre inventaire.");
+                    Console.WriteLine("Vous trouvez une Gemme de Dégâts et l'ajoutez à votre inventaire.");
                     break;
-                case "Pierre d'Amélioration":
+                case "Gemme d'Amélioration":
                     stoneInventory[x.Name] += 1;
-                    Console.WriteLine("Vous trouvez une Pierre d'Amélioration et l'ajoutez à votre inventaire.");
+                    Console.WriteLine("Vous trouvez une Gemme d'Amélioration et l'ajoutez à votre inventaire.");
                     break;
             }
         }
@@ -732,10 +765,26 @@ namespace ProjetRPG.Characters
             string MLP = maxLifePoints.ToString();
             string F = force.ToString();
             string S = stamina.ToString();
+            string[] IS = new string[6]; 
+            string GS = stoneInventory["Gemme de Soin"].ToString();
+            string GD = stoneInventory["Gemme de Dégâts"].ToString();
+            string GA = stoneInventory["Gemme d'Amélioration"].ToString();
             string Px = position[0].ToString();
             string Py = position[1].ToString();
             
-            string[] data = {LP, MLP, F, S, Px, Py};
+            for (int i = 1; i < infinityStoneInventory.Length-1; i++)
+            {
+                if (infinityStoneInventory[i] != null)
+                {
+                    IS[i] = 1.ToString();
+                }
+                else
+                {
+                    IS[i] = 0.ToString();
+                }
+            }
+            
+            string[] data = {LP, MLP, F, S, IS[1], IS[2], IS[3], IS[4], GS, GD, GA, Px, Py};
 
             Directory.CreateDirectory(savePath + @"\STW");
 
